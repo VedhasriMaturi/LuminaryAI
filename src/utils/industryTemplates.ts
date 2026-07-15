@@ -254,10 +254,10 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       { month: 'Jun', revenue: 285400, profit: 47947, orders: 489, expenses: 237453 }
     ],
     categories: [
-      { name: 'Emergency Care', revenue: 1141600, percentage: 40, sales: 1200, margin: 12 },
-      { name: 'Cardiology Services', revenue: 713500, percentage: 25, sales: 450, margin: 28 },
-      { name: 'Diagnostics & Lab', revenue: 428100, percentage: 15, sales: 3410, margin: 45 },
-      { name: 'Pharmacy Sales', revenue: 342480, percentage: 12, sales: 9800, margin: 38 },
+      { name: 'Emergency Care', revenue: 998900, percentage: 35, sales: 1200, margin: 12 },
+      { name: 'Cardiology Services', revenue: 799120, percentage: 28, sales: 450, margin: 28 },
+      { name: 'Diagnostics & Lab', revenue: 513720, percentage: 18, sales: 3410, margin: 45 },
+      { name: 'Pharmacy Sales', revenue: 313940, percentage: 11, sales: 9800, margin: 38 },
       { name: 'Outpatient Consults', revenue: 228320, percentage: 8, sales: 2840, margin: 20 }
     ],
     regionalSales: [
@@ -322,11 +322,11 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       { month: 'Jun', revenue: 384200, profit: 69156, orders: 15300, expenses: 315044 }
     ],
     categories: [
-      { name: 'Metal Fabrication', revenue: 1536800, percentage: 40, sales: 42000, margin: 15 },
-      { name: 'Electronics Assembly', revenue: 960500, percentage: 25, sales: 24000, margin: 22 },
-      { name: 'Plastic Molding', revenue: 576300, percentage: 15, sales: 38000, margin: 18 },
-      { name: 'Quality Inspection', revenue: 461040, percentage: 12, sales: 15300, margin: 30 },
-      { name: 'Packaging & Dispatch', revenue: 307360, percentage: 8, sales: 29620, margin: 10 }
+      { name: 'Metal Fabrication', revenue: 1728900, percentage: 45, sales: 42000, margin: 15 },
+      { name: 'Electronics Assembly', revenue: 768400, percentage: 20, sales: 24000, margin: 22 },
+      { name: 'Plastic Molding', revenue: 614720, percentage: 16, sales: 38000, margin: 18 },
+      { name: 'Quality Inspection', revenue: 384200, percentage: 10, sales: 15300, margin: 30 },
+      { name: 'Packaging & Dispatch', revenue: 345780, percentage: 9, sales: 29620, margin: 10 }
     ],
     regionalSales: [
       { region: 'Midwest Assembly Plant', sales: 1850000, orders: 7400, growth: 13.2, color: '#f59e0b' },
@@ -390,10 +390,10 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       { month: 'Jun', revenue: 72850, profit: 9033, orders: 142, expenses: 63817 }
     ],
     categories: [
-      { name: 'STEM Course Tracks', revenue: 339400, percentage: 40, sales: 4980, margin: 15 },
-      { name: 'Humanities Divisions', revenue: 212125, percentage: 25, sales: 3120, margin: 8 },
-      { name: 'Athletic Programs', revenue: 127275, percentage: 15, sales: 1870, margin: -10 },
-      { name: 'Arts & Music Tracks', revenue: 101820, percentage: 12, sales: 1500, margin: 6 },
+      { name: 'STEM Course Tracks', revenue: 322430, percentage: 38, sales: 4980, margin: 15 },
+      { name: 'Humanities Divisions', revenue: 229095, percentage: 27, sales: 3120, margin: 8 },
+      { name: 'Athletic Programs', revenue: 135760, percentage: 16, sales: 1870, margin: -10 },
+      { name: 'Arts & Music Tracks', revenue: 93335, percentage: 11, sales: 1500, margin: 6 },
       { name: 'Online Certifications', revenue: 67880, percentage: 8, sales: 1010, margin: 45 }
     ],
     regionalSales: [
@@ -458,11 +458,11 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       { month: 'Jun', revenue: 84590, profit: 17763, orders: 1690, expenses: 66827 }
     ],
     categories: [
-      { name: 'Search Ads (SEM)', revenue: 338360, percentage: 40, sales: 12400, margin: 18 },
-      { name: 'Paid Social Media', revenue: 211475, percentage: 25, sales: 8400, margin: 14 },
-      { name: 'Influencer Placement', revenue: 126885, percentage: 15, sales: 180, margin: 35 },
-      { name: 'Email Operations', revenue: 101508, percentage: 12, sales: 94000, margin: 85 },
-      { name: 'Organic SEO Projects', revenue: 67672, percentage: 8, sales: 420, margin: 40 }
+      { name: 'Search Ads (SEM)', revenue: 355278, percentage: 42, sales: 12400, margin: 18 },
+      { name: 'Paid Social Media', revenue: 203016, percentage: 24, sales: 8400, margin: 14 },
+      { name: 'Influencer Placement', revenue: 143803, percentage: 17, sales: 180, margin: 35 },
+      { name: 'Email Operations', revenue: 84590, percentage: 10, sales: 94000, margin: 85 },
+      { name: 'Organic SEO Projects', revenue: 59213, percentage: 7, sales: 420, margin: 40 }
     ],
     regionalSales: [
       { region: 'Google Ads Manager', sales: 415000, orders: 8400, growth: 16.8, color: '#8b5cf6' },
@@ -526,11 +526,11 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       { month: 'Jun', revenue: 842000, profit: 464784, orders: 1450, expenses: 377216 }
     ],
     categories: [
-      { name: 'Mortgages & Home Loans', revenue: 33680000, percentage: 40, sales: 480, margin: 48 },
-      { name: 'Wealth Management', revenue: 21050000, percentage: 25, sales: 1240, margin: 62 },
-      { name: 'Personal Loans', revenue: 12630000, percentage: 15, sales: 3840, margin: 55 },
-      { name: 'checking/savings', revenue: 10104000, percentage: 12, sales: 18500, margin: 12 },
-      { name: 'Credit Cards', revenue: 6736000, percentage: 8, sales: 4280, margin: 68 }
+      { name: 'Mortgages & Home Loans', revenue: 30312000, percentage: 36, sales: 480, margin: 48 },
+      { name: 'Wealth Management', revenue: 24418000, percentage: 29, sales: 1240, margin: 62 },
+      { name: 'Personal Loans', revenue: 15156000, percentage: 18, sales: 3840, margin: 55 },
+      { name: 'checking/savings', revenue: 8420000, percentage: 10, sales: 18500, margin: 12 },
+      { name: 'Credit Cards', revenue: 5894000, percentage: 7, sales: 4280, margin: 68 }
     ],
     regionalSales: [
       { region: 'East Coast Wealth', sales: 3450000, orders: 1200, growth: 12.8, color: '#475569' },
