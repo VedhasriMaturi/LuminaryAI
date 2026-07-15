@@ -358,7 +358,7 @@ export const HomeDashboard: React.FC<HomeDashboardProps> = ({
 
           {/* Custom legends */}
           <div className="space-y-2 border-t border-slate-100 dark:border-slate-805/60 pt-3 text-[10px] font-semibold text-slate-500">
-            {template.categories.slice(0, 3).map((cat, idx) => (
+            {template.categories.map((cat, idx) => (
               <div key={cat.name} className="flex items-center justify-between">
                 <div className="flex items-center gap-1.5 min-w-0">
                   <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: COLORS[idx % COLORS.length] }}></span>
