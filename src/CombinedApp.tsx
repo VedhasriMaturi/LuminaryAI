@@ -349,10 +349,10 @@ export const MONTHLY_SALES_HISTORY: SalesDataPoint[] = [
 ];
 
 export const REGIONAL_SALES = [
-  { region: 'North America', sales: 485000, orders: 5800, growth: 12.4, color: '#6366f1' },
-  { region: 'Europe', sales: 324000, orders: 3900, growth: 8.2, color: '#3b82f6' },
-  { region: 'Asia-Pacific', sales: 295000, orders: 3500, growth: 22.8, color: '#10b981' },
-  { region: 'Latin America', sales: 144390, orders: 1692, growth: -3.5, color: '#ef4444' }
+  { region: 'Andhra Pradesh', sales: 485000, orders: 5800, growth: 12.4, color: '#6366f1' },
+  { region: 'Telangana', sales: 324000, orders: 3900, growth: 8.2, color: '#3b82f6' },
+  { region: 'Karnataka', sales: 295000, orders: 3500, growth: 22.8, color: '#10b981' },
+  { region: 'Tamil Nadu', sales: 144390, orders: 1692, growth: -3.5, color: '#ef4444' }
 ];
 
 export const PRODUCT_CATEGORIES = [
@@ -1659,10 +1659,10 @@ export const HomeDashboard: React.FC<{
     const timer = setTimeout(() => {
       setIsLoading(false);
       let multiplier = 1.0;
-      if (selectedRegion === 'North America') multiplier = 1.1;
-      else if (selectedRegion === 'Europe') multiplier = 0.95;
-      else if (selectedRegion === 'Asia-Pacific') multiplier = 1.15;
-      else if (selectedRegion === 'Latin America') multiplier = 0.8;
+      if (selectedRegion === 'Andhra Pradesh') multiplier = 1.1;
+      else if (selectedRegion === 'Telangana') multiplier = 0.95;
+      else if (selectedRegion === 'Karnataka') multiplier = 1.15;
+      else if (selectedRegion === 'Tamil Nadu') multiplier = 0.8;
 
       setKpis(INITIAL_KPI_CARDS.map(kpi => {
         if (['kpi-revenue', 'kpi-orders', 'kpi-customers'].includes(kpi.id)) {
@@ -1688,10 +1688,10 @@ export const HomeDashboard: React.FC<{
             <MapPin size={14} className="text-slate-400" />
             <select value={selectedRegion} onChange={(e) => setSelectedRegion(e.target.value)} className="bg-transparent outline-none cursor-pointer text-slate-705 dark:text-slate-350">
               <option value="All Regions">All Regions</option>
-              <option value="North America">North America</option>
-              <option value="Europe">Europe</option>
-              <option value="Asia-Pacific">Asia-Pacific</option>
-              <option value="Latin America">Latin America</option>
+              <option value="Andhra Pradesh">Andhra Pradesh</option>
+              <option value="Telangana">Telangana</option>
+              <option value="Karnataka">Karnataka</option>
+              <option value="Tamil Nadu">Tamil Nadu</option>
             </select>
           </div>
         </div>

@@ -200,10 +200,10 @@ export const MONTHLY_SALES_HISTORY: SalesDataPoint[] = [
 ];
 
 export const REGIONAL_SALES = [
-  { region: 'North America', sales: 485000, orders: 5800, growth: 12.4, color: '#6366f1' },
-  { region: 'Europe', sales: 324000, orders: 3900, growth: 8.2, color: '#3b82f6' },
-  { region: 'Asia-Pacific', sales: 295000, orders: 3500, growth: 22.8, color: '#10b981' },
-  { region: 'Latin America', sales: 144390, orders: 1692, growth: -3.5, color: '#ef4444' }
+  { region: 'Andhra Pradesh', sales: 485000, orders: 5800, growth: 12.4, color: '#6366f1' },
+  { region: 'Telangana', sales: 324000, orders: 3900, growth: 8.2, color: '#3b82f6' },
+  { region: 'Karnataka', sales: 295000, orders: 3500, growth: 22.8, color: '#10b981' },
+  { region: 'Tamil Nadu', sales: 144390, orders: 1692, growth: -3.5, color: '#ef4444' }
 ];
 
 export const PRODUCT_CATEGORIES = [

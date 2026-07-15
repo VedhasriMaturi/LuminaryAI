@@ -120,10 +120,10 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       { name: 'Sports & Outdoors', revenue: 99872, percentage: 8, sales: 1100, margin: 30 }
     ],
     regionalSales: [
-      { region: 'North America', sales: 485000, orders: 5800, growth: 12.4, color: '#6366f1' },
-      { region: 'Europe', sales: 324000, orders: 3900, growth: 8.2, color: '#3b82f6' },
-      { region: 'Asia-Pacific', sales: 295000, orders: 3500, growth: 22.8, color: '#10b981' },
-      { region: 'Latin America', sales: 144390, orders: 1692, growth: -3.5, color: '#ef4444' }
+      { region: 'Andhra Pradesh', sales: 485000, orders: 5800, growth: 12.4, color: '#6366f1' },
+      { region: 'Telangana', sales: 324000, orders: 3900, growth: 8.2, color: '#3b82f6' },
+      { region: 'Karnataka', sales: 295000, orders: 3500, growth: 22.8, color: '#10b981' },
+      { region: 'Tamil Nadu', sales: 144390, orders: 1692, growth: -3.5, color: '#ef4444' }
     ],
     risks: [
       { id: 'risk-stock', title: 'Potential Stock Shortage', level: 'High', probability: 85, expectedImpact: 'Stockout of Zenith Pro Smartwatch in 5 days due to sales velocity', rootCause: 'Supplier delivery delay matched with sudden spike in digital clicks', suggestedSolution: 'Reorder instantly with air delivery priority or initiate warehouse swap', category: 'inventory', status: 'active', timestamp: '2 hours ago' },
@@ -148,12 +148,12 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
     ],
     chatbotTriggers: {
       'why are sales dropping?': {
-        answer: 'Sales in Latin America dropped by 3.5% due to inventory delivery delays. Zenith Pro Smartwatches were out of stock for 4 days in that region.',
+        answer: 'Sales in Tamil Nadu dropped by 3.5% due to inventory delivery delays. Zenith Pro Smartwatches were out of stock for 4 days in that region.',
         chartData: [
-          { name: 'North America', value: 485000 },
-          { name: 'Europe', value: 324000 },
-          { name: 'Asia-Pacific', value: 295000 },
-          { name: 'Latin America', value: 144390 }
+          { name: 'Andhra Pradesh', value: 485000 },
+          { name: 'Telangana', value: 324000 },
+          { name: 'Karnataka', value: 295000 },
+          { name: 'Tamil Nadu', value: 144390 }
         ],
         chartKeys: ['value'],
         chartColors: ['#6366f1'],
@@ -193,9 +193,9 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       { name: 'Catering & Other', revenue: 22910, percentage: 5, sales: 480, margin: 30 }
     ],
     regionalSales: [
-      { region: 'Downtown Bistro', sales: 215000, orders: 8100, growth: 14.5, color: '#f59e0b' },
-      { region: 'Westside Lounge', sales: 142000, orders: 5400, growth: 9.8, color: '#3b82f6' },
-      { region: 'Suburban Express', sales: 101200, orders: 4840, growth: 3.2, color: '#10b981' }
+      { region: 'Visakhapatnam Bistro', sales: 215000, orders: 8100, growth: 14.5, color: '#f59e0b' },
+      { region: 'Vijayawada Lounge', sales: 142000, orders: 5400, growth: 9.8, color: '#3b82f6' },
+      { region: 'Tirupati Expressway', sales: 101200, orders: 4840, growth: 3.2, color: '#10b981' }
     ],
     risks: [
       { id: 'risk-spoil', title: 'High Fresh Produce Spoilage', level: 'High', probability: 78, expectedImpact: 'Food waste costs expected to leak an additional ₹3,200', rootCause: 'Over-ordering of avocado and leafy greens due to weekend rain forecasts', suggestedSolution: 'Dynamically scale down produce purchasing schedules using weather-linked inventory forecasting', category: 'inventory', status: 'active', timestamp: '1 hour ago' },
@@ -217,11 +217,11 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
     ],
     chatbotTriggers: {
       'why are sales dropping?': {
-        answer: 'Sales at Suburban Express dropped due to temporary local road closures restricting dine-in customer access.',
+        answer: 'Sales at Tirupati Expressway dropped due to temporary local road closures restricting dine-in customer access.',
         chartData: [
-          { name: 'Downtown Bistro', value: 215000 },
-          { name: 'Westside Lounge', value: 142000 },
-          { name: 'Suburban Express', value: 101200 }
+          { name: 'Visakhapatnam Bistro', value: 215000 },
+          { name: 'Vijayawada Lounge', value: 142000 },
+          { name: 'Tirupati Expressway', value: 101200 }
         ],
         chartKeys: ['value'],
         chartColors: ['#f59e0b'],
@@ -261,9 +261,9 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       { name: 'Outpatient Consults', revenue: 228320, percentage: 8, sales: 2840, margin: 20 }
     ],
     regionalSales: [
-      { region: 'East Wing Clinic', sales: 1285000, orders: 2100, growth: 14.8, color: '#10b981' },
-      { region: 'West Wing ER', sales: 945000, orders: 1820, growth: 8.4, color: '#3b82f6' },
-      { region: 'Suburban Rehab', sales: 624000, orders: 980, growth: -2.1, color: '#ef4444' }
+      { region: 'Visakhapatnam Clinic', sales: 1285000, orders: 2100, growth: 14.8, color: '#10b981' },
+      { region: 'Guntur Care ER', sales: 945000, orders: 1820, growth: 8.4, color: '#3b82f6' },
+      { region: 'Vijayawada Rehab Center', sales: 624000, orders: 980, growth: -2.1, color: '#ef4444' }
     ],
     risks: [
       { id: 'risk-burnout', title: 'ER Nurse Burnout Alert', level: 'High', probability: 92, expectedImpact: 'Potential staffing deficit or coverage breach in ER department next week', rootCause: 'Accumulated shifts due to inpatient overflow during season change', suggestedSolution: 'Reallocate 3 staff nurses from outpatient unit to night shifts', category: 'employee', status: 'active', timestamp: '30 mins ago' },
@@ -285,11 +285,11 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
     ],
     chatbotTriggers: {
       'why are sales dropping?': {
-        answer: 'Billing revenue at Suburban Rehab declined because outpatient schedules were reduced by 15% due to nurse staffing reallocations.',
+        answer: 'Billing revenue at Vijayawada Rehab Center declined because outpatient schedules were reduced by 15% due to nurse staffing reallocations.',
         chartData: [
-          { name: 'East Wing Clinic', value: 1285000 },
-          { name: 'West Wing ER', value: 945000 },
-          { name: 'Suburban Rehab', value: 624000 }
+          { name: 'Visakhapatnam Clinic', value: 1285000 },
+          { name: 'Guntur Care ER', value: 945000 },
+          { name: 'Vijayawada Rehab Center', value: 624000 }
         ],
         chartKeys: ['value'],
         chartColors: ['#10b981'],
@@ -329,9 +329,9 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       { name: 'Packaging & Dispatch', revenue: 345780, percentage: 9, sales: 29620, margin: 10 }
     ],
     regionalSales: [
-      { region: 'Midwest Assembly Plant', sales: 1850000, orders: 7400, growth: 13.2, color: '#f59e0b' },
-      { region: 'Southern Foundry', sales: 1240000, orders: 4900, growth: 7.8, color: '#3b82f6' },
-      { region: 'Northern Logistics', sales: 752000, orders: 3000, growth: -1.5, color: '#ef4444' }
+      { region: 'Nellore Foundry', sales: 1850000, orders: 7400, growth: 13.2, color: '#f59e0b' },
+      { region: 'Kakinada Assembly Plant', sales: 1240000, orders: 4900, growth: 7.8, color: '#3b82f6' },
+      { region: 'Vizag Logistics Hub', sales: 752000, orders: 3000, growth: -1.5, color: '#ef4444' }
     ],
     risks: [
       { id: 'risk-downtime', title: 'Stamping Machine Alert', level: 'High', probability: 88, expectedImpact: 'Unscheduled downtime of 4 hours, costing ₹12,000 in queue delay', rootCause: 'Hydraulic pressure fluctuations exceeding normal 2.5x variance ranges', suggestedSolution: 'Initiate off-cycle preventive pump cleaning during tonight shifts shift change', category: 'inventory', status: 'active', timestamp: '15 mins ago' },
@@ -353,11 +353,11 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
     ],
     chatbotTriggers: {
       'why are sales dropping?': {
-        answer: 'Production revenue at Northern Logistics decreased by 1.5% due to winter weather delaying container dispatch runs.',
+        answer: 'Production revenue at Vizag Logistics Hub decreased by 1.5% due to winter weather delaying container dispatch runs.',
         chartData: [
-          { name: 'Midwest Assembly Plant', value: 1850000 },
-          { name: 'Southern Foundry', value: 1240000 },
-          { name: 'Northern Logistics', value: 752000 }
+          { name: 'Nellore Foundry', value: 1850000 },
+          { name: 'Kakinada Assembly Plant', value: 1240000 },
+          { name: 'Vizag Logistics Hub', value: 752000 }
         ],
         chartKeys: ['value'],
         chartColors: ['#f59e0b'],
@@ -397,9 +397,9 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       { name: 'Online Certifications', revenue: 67880, percentage: 8, sales: 1010, margin: 45 }
     ],
     regionalSales: [
-      { region: 'Main Campus', sales: 520000, orders: 7800, growth: 8.5, color: '#ec4899' },
-      { region: 'Downtown Extension', sales: 228000, orders: 3200, growth: 4.2, color: '#3b82f6' },
-      { region: 'Online Academy', sales: 100500, orders: 1480, growth: 18.6, color: '#10b981' }
+      { region: 'Tirupati Campus', sales: 520000, orders: 7800, growth: 8.5, color: '#ec4899' },
+      { region: 'Anantapur Extension', sales: 228000, orders: 3200, growth: 4.2, color: '#3b82f6' },
+      { region: 'Amaravati Online Academy', sales: 100500, orders: 1480, growth: 18.6, color: '#10b981' }
     ],
     risks: [
       { id: 'risk-dropout', title: 'Online Student Dropout Warning', level: 'High', probability: 82, expectedImpact: 'Tuition revenue dilution of ₹14,000 next semester', rootCause: 'Lack of interactive peer study circles in self-paced programming tracks', suggestedSolution: 'Launch automated peer tutoring invitations for users lagging on week 3 exercises', category: 'customer', status: 'active', timestamp: '4 hours ago' },
@@ -411,7 +411,7 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
     ],
     operationalMetrics: [
       { name: 'Computer Laboratories', status: 'warning', utilization: 89, throughput: '180 seats/hr', efficiency: 84 },
-      { name: 'Main Campus Libraries', status: 'optimal', utilization: 62, throughput: '340 checkouts/day', efficiency: 92 },
+      { name: 'Tirupati Campus Libraries', status: 'optimal', utilization: 62, throughput: '340 checkouts/day', efficiency: 92 },
       { name: 'Athletic Sports Complex', status: 'optimal', utilization: 45, throughput: '80 bookings/day', efficiency: 88 }
     ],
     leaderboard: [
@@ -423,9 +423,9 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       'why are sales dropping?': {
         answer: 'Athletic revenues dropped by 1.5% due to reduced stadium ticket purchases during regional rainouts.',
         chartData: [
-          { name: 'Main Campus', value: 520000 },
-          { name: 'Downtown Extension', value: 228000 },
-          { name: 'Online Academy', value: 100500 }
+          { name: 'Tirupati Campus', value: 520000 },
+          { name: 'Anantapur Extension', value: 228000 },
+          { name: 'Amaravati Online Academy', value: 100500 }
         ],
         chartKeys: ['value'],
         chartColors: ['#ec4899'],
@@ -465,9 +465,9 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       { name: 'Organic SEO Projects', revenue: 59213, percentage: 7, sales: 420, margin: 40 }
     ],
     regionalSales: [
-      { region: 'Google Ads Manager', sales: 415000, orders: 8400, growth: 16.8, color: '#8b5cf6' },
-      { region: 'Meta/Instagram Ads', sales: 295000, orders: 5800, growth: 12.2, color: '#3b82f6' },
-      { region: 'TikTok Creative Suite', sales: 135900, orders: 3200, growth: 22.4, color: '#10b981' }
+      { region: 'Hyderabad Ad Ops Branch', sales: 415000, orders: 8400, growth: 16.8, color: '#8b5cf6' },
+      { region: 'Bengaluru Creative Studio', sales: 295000, orders: 5800, growth: 12.2, color: '#3b82f6' },
+      { region: 'Mumbai Digital Hub', sales: 135900, orders: 3200, growth: 22.4, color: '#10b981' }
     ],
     risks: [
       { id: 'risk-cpc', title: 'Paid Social ROAS Deceleration', level: 'High', probability: 84, expectedImpact: 'Agency client spend reduction of ₹35,005 next month', rootCause: 'Competitor bidding spikes in summer vacation categories', suggestedSolution: 'Pause underperforming static ad sets and pivot budget parameters into TikTok user videos', category: 'finance', status: 'active', timestamp: '1 hour ago' },
@@ -491,9 +491,9 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       'why are sales dropping?': {
         answer: 'Lead conversions on Instagram dropped because keyword bids inflated by 18%, reducing our daily budget coverage.',
         chartData: [
-          { name: 'Google Ads Manager', value: 415000 },
-          { name: 'Meta/Instagram Ads', value: 295000 },
-          { name: 'TikTok Creative Suite', value: 135900 }
+          { name: 'Hyderabad Ad Ops Branch', value: 415000 },
+          { name: 'Bengaluru Creative Studio', value: 295000 },
+          { name: 'Mumbai Digital Hub', value: 135900 }
         ],
         chartKeys: ['value'],
         chartColors: ['#8b5cf6'],
@@ -533,9 +533,9 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       { name: 'Credit Cards', revenue: 5894000, percentage: 7, sales: 4280, margin: 68 }
     ],
     regionalSales: [
-      { region: 'East Coast Wealth', sales: 3450000, orders: 1200, growth: 12.8, color: '#475569' },
-      { region: 'West Coast retail', sales: 2950000, orders: 4800, growth: 8.5, color: '#3b82f6' },
-      { region: 'Midwest Agriculture', sales: 2020000, orders: 900, growth: -2.1, color: '#ef4444' }
+      { region: 'Amaravati Wealth Center', sales: 3450000, orders: 1200, growth: 12.8, color: '#475569' },
+      { region: 'Visakhapatnam Port Branch', sales: 2950000, orders: 4800, growth: 8.5, color: '#3b82f6' },
+      { region: 'Kurnool Rural Banking', sales: 2020000, orders: 900, growth: -2.1, color: '#ef4444' }
     ],
     risks: [
       { id: 'risk-defaults', title: 'Personal Loan Default Alert', level: 'High', probability: 78, expectedImpact: 'Profit markdown of ₹62,000 in loan division assets', rootCause: 'Rising interest rates squeezing retail debt service capacity', suggestedSolution: 'Tighten score parameters on personal loan auto-approvals above ₹10k', category: 'finance', status: 'active', timestamp: '2 hours ago' },
@@ -559,9 +559,9 @@ export const INDUSTRY_TEMPLATES: { [key: string]: IndustryTemplate } = {
       'why are sales dropping?': {
         answer: 'Mortgage values in the Midwest region decreased by 2.1% due to rising housing interest rate profiles.',
         chartData: [
-          { name: 'East Coast Wealth', value: 3450000 },
-          { name: 'West Coast retail', value: 2950000 },
-          { name: 'Midwest Agriculture', value: 2020000 }
+          { name: 'Amaravati Wealth Center', value: 3450000 },
+          { name: 'Visakhapatnam Port Branch', value: 2950000 },
+          { name: 'Kurnool Rural Banking', value: 2020000 }
         ],
         chartKeys: ['value'],
         chartColors: ['#475569'],

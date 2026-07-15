@@ -207,7 +207,7 @@ export const SalesAnalytics: React.FC = () => {
           <div className="relative w-full h-44 bg-indigo-50/20 dark:bg-slate-950/40 rounded-2xl border border-slate-205/30 my-4 flex items-center justify-center overflow-hidden">
             {/* Simulated background continent lines */}
             <div className="absolute inset-0 opacity-15 dark:opacity-5 flex items-center justify-center pointer-events-none select-none text-7xl font-bold font-serif text-slate-800">
-              🌍 WORLD DATA MAP
+              🇮🇳 INDIA DATA MAP
             </div>
 
             {/* Simulated Interactive Markers */}
@@ -215,7 +215,7 @@ export const SalesAnalytics: React.FC = () => {
               <span className="w-3.5 h-3.5 rounded-full bg-brand-500 animate-ping absolute top-0 left-0" />
               <span className="w-3.5 h-3.5 rounded-full bg-brand-500 block relative border-2 border-white dark:border-slate-900" />
               <div className="absolute left-6 -top-4 bg-white dark:bg-slate-900 shadow-md border border-slate-200/50 dark:border-slate-800 rounded-lg p-2 text-[9px] font-bold min-w-[100px] z-10 hidden group-hover:block pointer-events-none">
-                <p className="text-slate-850 dark:text-slate-200">North America</p>
+                <p className="text-slate-850 dark:text-slate-200">Andhra Pradesh</p>
                 <p className="text-brand-650 mt-0.5">₹485,000 Sales</p>
                 <p className="text-emerald-500">+12.4% Growth</p>
               </div>
@@ -225,7 +225,7 @@ export const SalesAnalytics: React.FC = () => {
               <span className="w-3.5 h-3.5 rounded-full bg-blue-500 animate-ping absolute top-0 left-0" />
               <span className="w-3.5 h-3.5 rounded-full bg-blue-500 block relative border-2 border-white dark:border-slate-900" />
               <div className="absolute left-6 -top-4 bg-white dark:bg-slate-900 shadow-md border border-slate-200/50 dark:border-slate-800 rounded-lg p-2 text-[9px] font-bold min-w-[100px] z-10 hidden group-hover:block pointer-events-none">
-                <p className="text-slate-850 dark:text-slate-200">Europe</p>
+                <p className="text-slate-850 dark:text-slate-200">Telangana</p>
                 <p className="text-blue-500 mt-0.5">₹324,000 Sales</p>
                 <p className="text-emerald-500">+8.2% Growth</p>
               </div>
@@ -235,7 +235,7 @@ export const SalesAnalytics: React.FC = () => {
               <span className="w-3.5 h-3.5 rounded-full bg-emerald-500 animate-ping absolute top-0 left-0" />
               <span className="w-3.5 h-3.5 rounded-full bg-emerald-500 block relative border-2 border-white dark:border-slate-900" />
               <div className="absolute left-6 -top-4 bg-white dark:bg-slate-900 shadow-md border border-slate-200/50 dark:border-slate-800 rounded-lg p-2 text-[9px] font-bold min-w-[100px] z-10 hidden group-hover:block pointer-events-none">
-                <p className="text-slate-850 dark:text-slate-200">Asia-Pacific</p>
+                <p className="text-slate-850 dark:text-slate-200">Karnataka</p>
                 <p className="text-emerald-500 mt-0.5">₹295,000 Sales</p>
                 <p className="text-emerald-500">+22.8% Growth</p>
               </div>
@@ -245,7 +245,7 @@ export const SalesAnalytics: React.FC = () => {
               <span className="w-3.5 h-3.5 rounded-full bg-danger-500 animate-ping absolute top-0 left-0" />
               <span className="w-3.5 h-3.5 rounded-full bg-danger-500 block relative border-2 border-white dark:border-slate-900" />
               <div className="absolute left-6 -top-4 bg-white dark:bg-slate-900 shadow-md border border-slate-200/50 dark:border-slate-800 rounded-lg p-2 text-[9px] font-bold min-w-[100px] z-10 hidden group-hover:block pointer-events-none">
-                <p className="text-slate-850 dark:text-slate-200">Latin America</p>
+                <p className="text-slate-850 dark:text-slate-200">Tamil Nadu</p>
                 <p className="text-danger-500 mt-0.5">₹144,390 Sales</p>
                 <p className="text-danger-500">-3.5% Growth</p>
               </div>
