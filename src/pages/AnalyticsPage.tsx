@@ -199,12 +199,84 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ activeIndustry }) 
 
   // 3. Employee & Personnel Render
   const renderEmployeesTab = () => {
-    // Roster lists mock
-    const employees = [
-      { name: 'Dr. Sarah Jenkins', role: 'Department Head', dept: 'Operations division', prod: 94, eff: 92, avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
-      { name: 'Marcus Vance', role: 'Shift Lead', dept: 'Service unit', prod: 82, eff: 89, avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150' },
-      { name: 'Elena Rostova', role: 'Operations Officer', dept: 'Admin logistics', prod: 97, eff: 96, avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' }
-    ];
+    // Dynamic config based on active sector
+    let employeesList = [];
+    let metric1Label = 'Productivity';
+    let metric2Label = 'Efficiency';
+
+    switch (activeIndustry) {
+      case 'education':
+        metric1Label = 'Productivity';
+        metric2Label = 'Efficiency';
+        employeesList = [
+          { name: 'Dr. Sarah Jenkins', role: 'Department Head', dept: 'Operations division', val1: '94%', val2: '92%', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
+          { name: 'Marcus Vance', role: 'Shift Lead', dept: 'Service unit', val1: '82%', val2: '89%', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150' },
+          { name: 'Elena Rostova', role: 'Operations Officer', dept: 'Admin logistics', val1: '97%', val2: '96%', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' }
+        ];
+        break;
+      case 'healthcare':
+        metric1Label = 'Patient Care';
+        metric2Label = 'Avg Consult Time';
+        employeesList = [
+          { name: 'Dr. Sarah Jenkins', role: 'Chief Surgeon', dept: 'Emergency Unit', val1: '94%', val2: '14 min', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
+          { name: 'Marcus Vance', role: 'Clinical Director', dept: 'Night Shift', val1: '82%', val2: '18 min', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150' },
+          { name: 'Elena Rostova', role: 'Head Nurse', dept: 'ICU Ward', val1: '97%', val2: '11 min', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' }
+        ];
+        break;
+      case 'retail':
+        metric1Label = 'Sales Target';
+        metric2Label = 'CSAT Score';
+        employeesList = [
+          { name: 'Dr. Sarah Jenkins', role: 'Store Manager', dept: 'Zone A', val1: '94%', val2: '4.8/5.0', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
+          { name: 'Marcus Vance', role: 'Shift Lead', dept: 'Warehouse A', val1: '82%', val2: '4.2/5.0', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150' },
+          { name: 'Elena Rostova', role: 'Logistics Officer', dept: 'Dock 4', val1: '97%', val2: '4.9/5.0', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' }
+        ];
+        break;
+      case 'restaurants':
+        metric1Label = 'Table Turn';
+        metric2Label = 'Guest CSAT';
+        employeesList = [
+          { name: 'Dr. Sarah Jenkins', role: 'Head Chef', dept: 'Main Kitchen', val1: '4.8x/hr', val2: '4.9/5.0', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
+          { name: 'Marcus Vance', role: 'Sous Chef', dept: 'Pastry Bench', val1: '4.2x/hr', val2: '4.5/5.0', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150' },
+          { name: 'Elena Rostova', role: 'Maitre D\'', dept: 'Dine-in Area', val1: '5.1x/hr', val2: '4.8/5.0', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' }
+        ];
+        break;
+      case 'manufacturing':
+        metric1Label = 'OEE Rate';
+        metric2Label = 'Safety Score';
+        employeesList = [
+          { name: 'Dr. Sarah Jenkins', role: 'Plant Manager', dept: 'Line A Assembly', val1: '94%', val2: '98/100', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
+          { name: 'Marcus Vance', role: 'Safety Inspector', dept: 'Floor B Logistics', val1: '82%', val2: '95/100', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150' },
+          { name: 'Elena Rostova', role: 'Shift Engineer', dept: 'Line C Operations', val1: '97%', val2: '99/100', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' }
+        ];
+        break;
+      case 'marketing':
+        metric1Label = 'ROAS Ratio';
+        metric2Label = 'Conversion';
+        employeesList = [
+          { name: 'Dr. Sarah Jenkins', role: 'SEO Director', dept: 'Search Engine Channel', val1: '4.8x', val2: '8.4%', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
+          { name: 'Marcus Vance', role: 'Campaign Lead', dept: 'Social Media Channel', val1: '3.2x', val2: '6.2%', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150' },
+          { name: 'Elena Rostova', role: 'PPC Analyst', dept: 'Search & Display', val1: '5.2x', val2: '9.6%', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' }
+        ];
+        break;
+      case 'finance':
+        metric1Label = 'Asset Growth';
+        metric2Label = 'Risk Ratio';
+        employeesList = [
+          { name: 'Dr. Sarah Jenkins', role: 'Managing Director', dept: 'Wealth Management', val1: '+14.8%', val2: 'Low', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
+          { name: 'Marcus Vance', role: 'Financial Advisor', dept: 'Private Banking', val1: '+8.2%', val2: 'Medium', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150' },
+          { name: 'Elena Rostova', role: 'Equity Analyst', dept: 'Capital Markets', val1: '+22.8%', val2: 'Low', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' }
+        ];
+        break;
+      default:
+        metric1Label = 'Productivity';
+        metric2Label = 'Efficiency';
+        employeesList = [
+          { name: 'Dr. Sarah Jenkins', role: 'Team Lead', dept: 'Operations division', val1: '94%', val2: '92%', avatar: 'https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=150' },
+          { name: 'Marcus Vance', role: 'Senior Associate', dept: 'Support unit', val1: '82%', val2: '89%', avatar: 'https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=150' },
+          { name: 'Elena Rostova', role: 'Officer', dept: 'Logistics division', val1: '97%', val2: '96%', avatar: 'https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=150' }
+        ];
+    }
 
     return (
       <div className="space-y-6">
@@ -220,8 +292,8 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ activeIndustry }) 
             <div className="w-full h-52 flex items-center justify-center">
               <ResponsiveContainer width="100%" height="100%">
                 <RadarChart cx="50%" cy="50%" outerRadius="75%" data={[
-                  { name: 'Efficiency', target: 90, average: 88 },
-                  { name: 'Productivity', target: 85, average: 86 },
+                  { name: metric2Label, target: 90, average: 88 },
+                  { name: metric1Label, target: 85, average: 86 },
                   { name: 'Attendance', target: 95, average: 97 },
                   { name: 'CSAT Focus', target: 92, average: 91 }
                 ]}>
@@ -245,7 +317,7 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ activeIndustry }) 
             </div>
 
             <div className="space-y-3 max-h-[300px] overflow-y-auto pr-1">
-              {employees.map((emp, idx) => (
+              {employeesList.map((emp, idx) => (
                 <div key={idx} className="p-3.5 bg-slate-50/50 dark:bg-slate-950/20 border border-slate-205/5 rounded-2xl flex items-center justify-between gap-4">
                   <div className="flex items-center gap-3">
                     <img src={emp.avatar} alt={emp.name} className="w-8 h-8 rounded-full object-cover border" />
@@ -257,12 +329,12 @@ export const AnalyticsPage: React.FC<AnalyticsPageProps> = ({ activeIndustry }) 
 
                   <div className="flex items-center gap-6 text-[10px] font-bold text-slate-500">
                     <div>
-                      <span className="block text-slate-455 text-[9px] uppercase">Productivity</span>
-                      <span className="text-slate-800 dark:text-slate-200 text-xs block mt-0.5">{emp.prod}%</span>
+                      <span className="block text-slate-455 text-[9px] uppercase">{metric1Label}</span>
+                      <span className="text-slate-800 dark:text-slate-200 text-xs block mt-0.5">{emp.val1}</span>
                     </div>
                     <div>
-                      <span className="block text-slate-455 text-[9px] uppercase">Efficiency</span>
-                      <span className="text-slate-800 dark:text-slate-205 text-xs block mt-0.5">{emp.eff}%</span>
+                      <span className="block text-slate-455 text-[9px] uppercase">{metric2Label}</span>
+                      <span className="text-slate-800 dark:text-slate-205 text-xs block mt-0.5">{emp.val2}</span>
                     </div>
                   </div>
                 </div>

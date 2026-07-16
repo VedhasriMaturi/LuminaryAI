@@ -98,46 +98,322 @@ export const PredictionsDashboard: React.FC<PredictionsDashboardProps> = ({ acti
 
   // Explainable AI text generators
   const getExplanation = () => {
+    const lastPt = forecastData[forecastData.length - 1] || {};
+    const lower = lastPt.lowerConfidence !== null && lastPt.lowerConfidence !== undefined ? lastPt.lowerConfidence : 0;
+    const upper = lastPt.upperConfidence !== null && lastPt.upperConfidence !== undefined ? lastPt.upperConfidence : 0;
+    const forecastVal = lastPt.forecast !== null && lastPt.forecast !== undefined ? lastPt.forecast : 0;
+
     switch (selectedMetric) {
       case 'revenue':
+        if (activeIndustry === 'education') {
+          return {
+            title: `Tuition & Fee Revenue Projections`,
+            reasons: [
+              `Strong enrollment cycle forecasted (estimated +12.4% tuition revenue in December) aligning with institutional admissions.`,
+              `Confidence range set at ${confidenceRange}% indicates tuition revenue bounds between ₹${lower.toLocaleString('en-IN')} and ₹${upper.toLocaleString('en-IN')} by year-end.`,
+              `Primary driver: Increased course registrations and online program enrollment rates.`
+            ],
+            impact: 'Est. Value: +₹1,24,000 additional campus funding.'
+          };
+        }
+        if (activeIndustry === 'healthcare') {
+          return {
+            title: `Clinical Billing & Outpatient Revenue Projections`,
+            reasons: [
+              `Winter seasonal inpatient billing expansion forecasted (estimated +15.5% in December) due to flu season cycles.`,
+              `Confidence range set at ${confidenceRange}% indicates clinical billing bounds between ₹${lower.toLocaleString('en-IN')} and ₹${upper.toLocaleString('en-IN')} by year-end.`,
+              `Primary driver: Specialty elective surgeries and outpatient diagnostics demand.`
+            ],
+            impact: 'Est. Return: +8.4% clinical cash flow optimization.'
+          };
+        }
+        if (activeIndustry === 'restaurants') {
+          return {
+            title: `Bistro Sales & Dine-in Revenue Projections`,
+            reasons: [
+              `Weekend and holiday dine-in revenue expansion forecasted (estimated +14.2% in December) for group table bookings.`,
+              `Confidence range set at ${confidenceRange}% indicates revenue bounds between ₹${lower.toLocaleString('en-IN')} and ₹${upper.toLocaleString('en-IN')} by year-end.`,
+              `Primary driver: Increased average check size from premium beverage additions.`
+            ],
+            impact: 'Est. Return: +11.8% dine-in check averages.'
+          };
+        }
+        if (activeIndustry === 'manufacturing') {
+          return {
+            title: `Production Output & Order Book Projections`,
+            reasons: [
+              `Industrial equipment delivery revenue forecasted to expand (estimated +12.8% in December) due to year-end budget closures.`,
+              `Confidence range set at ${confidenceRange}% indicates billing bounds between ₹${lower.toLocaleString('en-IN')} and ₹${upper.toLocaleString('en-IN')} by year-end.`,
+              `Primary driver: High-volume commercial electronics contracts.`
+            ],
+            impact: 'Est. Return: +9.5% plant capacity utilization margin.'
+          };
+        }
+        if (activeIndustry === 'marketing') {
+          return {
+            title: `Digital Campaign Attribution & ROAS Projections`,
+            reasons: [
+              `Digital ad revenue and conversion value forecasted to expand (estimated +19.6% in December) due to holiday search traffic.`,
+              `Confidence range set at ${confidenceRange}% indicates value bounds between ₹${lower.toLocaleString('en-IN')} and ₹${upper.toLocaleString('en-IN')} by year-end.`,
+              `Primary driver: High-efficiency programmatic display search ads.`
+            ],
+            impact: 'Est. Return: +16.4% marketing investment efficiency.'
+          };
+        }
+        if (activeIndustry === 'finance') {
+          return {
+            title: `Portfolio Interest & Asset Management Revenue`,
+            reasons: [
+              `Asset-under-management fee revenue forecasted to expand (estimated +11.5% in December) due to year-end investment infusions.`,
+              `Confidence range set at ${confidenceRange}% indicates billing bounds between ₹${lower.toLocaleString('en-IN')} and ₹${upper.toLocaleString('en-IN')} by year-end.`,
+              `Primary driver: High-net-worth portfolio allocations and advisory fees.`
+            ],
+            impact: 'Est. Return: +8.9% recurring advisory cash flow growth.'
+          };
+        }
+        // Default / Retail
         return {
-          title: `Revenue Projections for ${template.name}`,
+          title: `Gross Sales & E-Commerce Revenue Projections`,
           reasons: [
-            `Strong Q4 seasonal expansion forecasted (estimated +16.2% in December) aligning with historic buying trends.`,
-            `Confidence range set at ${confidenceRange}% indicates a deviation bound between ₹${forecastData[forecastData.length - 1].lowerConfidence?.toLocaleString('en-IN')} and ₹${forecastData[forecastData.length - 1].upperConfidence?.toLocaleString('en-IN')} by year-end.`,
-            `Primary driver: Increased digital engagement and cross-category bundling efficiency.`
+            `Strong Q4 holiday sales expansion forecasted (estimated +18.4% in December) aligning with shopping festivals.`,
+            `Confidence range set at ${confidenceRange}% indicates a deviation bound between ₹${lower.toLocaleString('en-IN')} and ₹${upper.toLocaleString('en-IN')} by year-end.`,
+            `Primary driver: Increased digital click conversion and high-margin product bundles.`
           ],
-          impact: 'Est. Return: +12.4% organic sales valuation.'
+          impact: 'Est. Return: +15.2% gross sales margins.'
         };
+
       case 'demand':
+        if (activeIndustry === 'education') {
+          return {
+            title: `Course & Classroom Demand Forecast`,
+            reasons: [
+              `Student course registrations are projected to spike starting early November for Spring semester.`,
+              `Classroom capacities will likely trigger warnings if class sizes are not optimized.`,
+              `Driver: Advanced research program applications showing steady MoM compounding curves.`
+            ],
+            impact: 'Est. Return: Prevents classroom overcrowding.'
+          };
+        }
+        if (activeIndustry === 'healthcare') {
+          return {
+            title: `Bed Space & Critical Supply Demand Forecast`,
+            reasons: [
+              `Patient admissions and emergency ward intake are projected to spike starting early November.`,
+              `Standard ICU beds and respiratory supplies will trigger warning alerts if restocking cycles are not optimized.`,
+              `Driver: Multi-specialty outpatient referrals showing steady MoM compounding curves.`
+            ],
+            impact: 'Est. Return: Prevents clinical resource stockouts.'
+          };
+        }
+        if (activeIndustry === 'restaurants') {
+          return {
+            title: `Fresh Ingredients & Kitchen Inventory Forecast`,
+            reasons: [
+              `Fresh ingredient replenishment orders are projected to spike starting early November.`,
+              `Perishable items (avocados, fresh salmon) will trigger spoilage alerts if procurement cycles are not weather-adjusted.`,
+              `Driver: Friday peak dinner booking trends compounding month-over-month.`
+            ],
+            impact: 'Est. Return: Minimizes kitchen food waste costs.'
+          };
+        }
+        if (activeIndustry === 'manufacturing') {
+          return {
+            title: `Raw Material & Equipment Spare Parts Forecast`,
+            reasons: [
+              `Steel and assembly components requirement are projected to spike starting early November.`,
+              `Supply delivery cycles will trigger material deficit alerts if safety levels are not increased.`,
+              `Driver: Production lines running closer to active load capacities.`
+            ],
+            impact: 'Est. Return: Avoids factory production downtime.'
+          };
+        }
+        if (activeIndustry === 'marketing') {
+          return {
+            title: `Server Bandwidth & Ad Impression Load Forecast`,
+            reasons: [
+              `Daily active site visitors and ad impression loads are projected to spike starting early November.`,
+              `Hosting cloud server limits will trigger load warnings during black-friday surge traffic.`,
+              `Driver: Conversion funnel optimizations driving higher traffic volumes.`
+            ],
+            impact: 'Est. Return: Eliminates page load speed dropoff.'
+          };
+        }
+        if (activeIndustry === 'finance') {
+          return {
+            title: `Client Meeting Requests & Loan Application Volumes`,
+            reasons: [
+              `Advisory consultation requests and loan applications are projected to spike starting early November.`,
+              `Credit approval cycles will trigger turnaround warnings if automation thresholds are not modified.`,
+              `Driver: Tax planning queries driving increased advisory demand.`
+            ],
+            impact: 'Est. Return: Prevents processing delays.'
+          };
+        }
+        // Default / Retail
         return {
-          title: `Resource & Stock Demand Forecast`,
+          title: `Inventory Stock & Warehouse Demand Forecast`,
           reasons: [
-            `Orders and product/service intake are projected to spike starting early November.`,
-            `Standard supply lead times (averaging 9.5 days) will likely trigger stock alerts if replenishment orders are not expedited.`,
-            `Driver: Client acquisition growth channels showing steady month-over-month compounding curves.`
+            `Order packages and delivery dispatch volume are projected to spike starting early November.`,
+            `Standard shipping lead times will likely trigger inventory stockout alerts for best-sellers.`,
+            `Driver: Digital advertising channels showing steady compounding customer traffic.`
           ],
-          impact: 'Est. Return: Prevents stockout capital loss.'
+          impact: 'Est. Return: Prevents checkout out-of-stock loss.'
         };
+
       case 'employees':
+        if (activeIndustry === 'education') {
+          return {
+            title: `Faculty & Staffing Capacity Requirements`,
+            reasons: [
+              `Model forecasts a need for 14% increase in educator headcount capacity to maintain student-teacher ratios.`,
+              `High risk of teacher burnout in STEM and foundational science courses.`,
+              `Driver: Higher student intake mismatched with current adjunct faculty rosters.`
+            ],
+            impact: 'Est. Return: Maintains student satisfaction above 4.7/5.0.'
+          };
+        }
+        if (activeIndustry === 'healthcare') {
+          return {
+            title: `Nurse & Physician Staffing Requirements`,
+            reasons: [
+              `Model forecasts a need for 22% increase in nurse roster capacity during peak night shifts to prevent triage delays.`,
+              `High risk of clinical staff burnout in emergency unit and intensive care divisions.`,
+              `Driver: Increased patient intake mismatched with current staff shift schedules.`
+            ],
+            impact: 'Est. Return: Maintains average consult times under 20 minutes.'
+          };
+        }
+        if (activeIndustry === 'restaurants') {
+          return {
+            title: `Kitchen Line & Waitstaff Roster Requirements`,
+            reasons: [
+              `Model forecasts a need for 15% increase in kitchen line cook capacity during dinner peaks.`,
+              `High risk of staff burnout in waitstaff during Friday rush hours.`,
+              `Driver: High table turnover rates mismatching prep station staff.`
+            ],
+            impact: 'Est. Return: Maintains ticket wait times under 18 minutes.'
+          };
+        }
+        if (activeIndustry === 'manufacturing') {
+          return {
+            title: `Factory Floor Shift & Safety Engineer Allocations`,
+            reasons: [
+              `Model forecasts a need for 10% increase in technician shift allocations to maintain preventative maintenance checks.`,
+              `High risk of operator fatigue in heavy machinery assembly units.`,
+              `Driver: Continuous 24/7 line operations exceeding standard labor capacities.`
+            ],
+            impact: 'Est. Return: Maintains OEE scores above 92%.'
+          };
+        }
+        if (activeIndustry === 'marketing') {
+          return {
+            title: `Creative Content & Campaign Specialist Allocations`,
+            reasons: [
+              `Model forecasts a need for 25% increase in copywriter and content specialist capacity to support holiday ad launches.`,
+              `High risk of designer burnout due to last-minute marketing campaign shifts.`,
+              `Driver: Brand promotion requests mismatching current design bandwidth.`
+            ],
+            impact: 'Est. Return: Accelerates ad deployment schedules.'
+          };
+        }
+        if (activeIndustry === 'finance') {
+          return {
+            title: `Compliance Officer & Portfolio Manager Requirements`,
+            reasons: [
+              `Model forecasts a need for 12% increase in compliance officer staffing to review year-end transactions.`,
+              `High risk of analyst overload during tax audit preparation cycles.`,
+              `Driver: Increased transaction volume mismatching compliance capacities.`
+            ],
+            impact: 'Est. Return: Reduces audit operational risks.'
+          };
+        }
+        // Default / Retail
         return {
-          title: `Staffing & Capacity Requirements`,
+          title: `Logistics & Warehouse Staffing Needs`,
           reasons: [
-            `Model forecasts a need for 18% increase in employee headcount capacity to prevent service delivery bottlenecks.`,
-            `High risk of staff burnout in high-demand divisions (e.g. kitchen line, ER care desks, creative design).`,
-            `Driver: Increased order volumes mismatching current roster allocations.`
+            `Model forecasts a need for 20% increase in packing and dispatch staff to handle holiday order volumes.`,
+            `High risk of associate fatigue on warehouse packing lines.`,
+            `Driver: Seasonal peak order volumes mismatching current warehouse rosters.`
           ],
-          impact: 'Est. Return: Maintains CSAT rating above 4.75/5.0.'
+          impact: 'Est. Return: Maintains next-day delivery dispatch rates.'
         };
-      default:
+
+      default: // Churn & LTV
+        if (activeIndustry === 'education') {
+          return {
+            title: `Student Dropout & Attrition Analysis`,
+            reasons: [
+              `Student attrition probability is modeled to decline to an all-time low of ${forecastVal}% by December.`,
+              `Positive effects from academic tutoring programs and early-warning alerts are feeding back into the system.`,
+              `Driver: Targeted counselor check-ins showing 89% student retention success rates.`
+            ],
+            impact: 'Est. Value Recovered: +₹84,000 lifetime tuition retention.'
+          };
+        }
+        if (activeIndustry === 'healthcare') {
+          return {
+            title: `Patient Retention & Clinic Revisit Analysis`,
+            reasons: [
+              `Patient attrition probability is modeled to decline to an all-time low of ${forecastVal}% by December.`,
+              `Positive effects from mobile follow-up apps and telehealth consultations are feeding back into the system.`,
+              `Driver: Post-discharge follow-up care campaigns showing 91% care compliance rates.`
+            ],
+            impact: 'Est. Value Recovered: +₹1,12,000 clinic lifetime value.'
+          };
+        }
+        if (activeIndustry === 'restaurants') {
+          return {
+            title: `Repeat Diner Attrition & Loyalty Analysis`,
+            reasons: [
+              `Diner churn probability (not returning within 30 days) is modeled to decline to an all-time low of ${forecastVal}% by December.`,
+              `Positive effects from happy-hour menu expansions and weekday combo specials are feeding back into the system.`,
+              `Driver: Guest feedback response program showing 86% revisit success rates.`
+            ],
+            impact: 'Est. Value Recovered: +₹32,005 customer lifetime value.'
+          };
+        }
+        if (activeIndustry === 'manufacturing') {
+          return {
+            title: `Commercial Client Contract Attrition Analysis`,
+            reasons: [
+              `Client contract churn probability is modeled to decline to an all-time low of ${forecastVal}% by December.`,
+              `Positive effects from direct key-account manager assignments and SLA guarantees are feeding back into the system.`,
+              `Driver: Proactive quality assurance checks showing 94% retention rates.`
+            ],
+            impact: 'Est. Value Recovered: +₹1,80,000 contract value preservation.'
+          };
+        }
+        if (activeIndustry === 'marketing') {
+          return {
+            title: `Digital Subscriber Attrition & Churn Analysis`,
+            reasons: [
+              `Subscriber churn rate is modeled to decline to an all-time low of ${forecastVal}% by December.`,
+              `Positive effects from personalized newsletters and customized onboarding flows are feeding back into the system.`,
+              `Driver: Automated win-back email sequences showing 84% reactivation success rates.`
+            ],
+            impact: 'Est. Value Recovered: +₹52,000 subscriber lifetime value.'
+          };
+        }
+        if (activeIndustry === 'finance') {
+          return {
+            title: `Capital Outflow & Client Account Retention Analysis`,
+            reasons: [
+              `Wealth account attrition probability is modeled to decline to an all-time low of ${forecastVal}% by December.`,
+              `Positive effects from personalized quarterly risk audits and advisory reviews are feeding back into the system.`,
+              `Driver: Direct relationship management follow-ups showing 93% success rates.`
+            ],
+            impact: 'Est. Value Recovered: +₹3,20,005 client assets preserved.'
+          };
+        }
+        // Default / Retail
         return {
-          title: `Predictive Customer Churn Analysis`,
+          title: `Predictive Customer Churn & LTV Analysis`,
           reasons: [
-            `Churn probability is modeled to decline to an all-time low of ${forecastData[forecastData.length - 1].forecast}% by December.`,
-            `Positive effects from recommended onboarding optimizations and loyalty voucher campaigns are feeding back into the system.`,
-            `Driver: Targeted client retention retention campaigns showing 87% success rates.`
+            `Customer churn probability is modeled to decline to an all-time low of ${forecastVal}% by December.`,
+            `Positive effects from personalized discount campaigns and cart-abandonment emails are feeding back into the system.`,
+            `Driver: Targeted loyalty cohort reward campaigns showing 87% retention rates.`
           ],
-          impact: 'Est. Value Recovered: +₹42,000 Lifetime Value.'
+          impact: 'Est. Value Recovered: +₹45,000 customer lifetime value.'
         };
     }
   };

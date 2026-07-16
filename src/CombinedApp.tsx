@@ -1444,7 +1444,7 @@ Ask me anything about your business data, predictions, or anomaly reports. For e
           {messages.map((msg) => (
             <div key={msg.id} className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}>
               <div className={`max-w-[85%] rounded-2xl px-4 py-3 text-xs leading-relaxed ${msg.sender === 'user' ? 'bg-gradient-to-tr from-brand-600 to-indigo-500 text-white rounded-br-none' : 'bg-slate-105 dark:bg-slate-800/80 text-slate-800 dark:text-slate-200 rounded-bl-none'}`}>
-                <p className="whitespace-pre-line select-text" dangerouslySetInnerHTML={{ __html: msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>₹1</strong>').replace(/\*(.*?)\*/g, '<em>₹1</em>') }} />
+                <p className="whitespace-pre-line select-text" dangerouslySetInnerHTML={{ __html: msg.text.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>').replace(/\*(.*?)\*/g, '<em>$1</em>') }} />
                 {msg.visual && renderVisual(msg.visual)}
                 {msg.recommendation && (
                   <div className="mt-3 bg-white dark:bg-slate-900 border border-slate-100 dark:border-slate-800 p-3 rounded-xl">

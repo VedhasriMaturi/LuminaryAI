@@ -10,6 +10,7 @@ interface AIAssistantPageProps {
 }
 
 interface Message {
+  id?: string;
   sender: 'user' | 'ai';
   text: string;
   timestamp: string;
@@ -19,6 +20,8 @@ interface Message {
     chartKeys: string[];
     chartColors: string[];
   };
+  reasoning?: string[];
+  showReasoning?: boolean;
 }
 
 export const AIAssistantPage: React.FC<AIAssistantPageProps> = ({ activeIndustry }) => {
@@ -32,6 +35,7 @@ export const AIAssistantPage: React.FC<AIAssistantPageProps> = ({ activeIndustry
   // Chat message logs state
   const [messages, setMessages] = useState<Message[]>([
     {
+      id: 'welcome',
       sender: 'ai',
       text: `Hello Jane! I am your AI Business Assistant. I am fully synchronized with the **${template.name}** active template database.\n\nAsk me queries like: *"Why are sales dropping?"* or *"What should I improve?"* or ask me to explain trends. You can also run dynamic scenario simulations using the controls on the right!`,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
@@ -46,26 +50,76 @@ export const AIAssistantPage: React.FC<AIAssistantPageProps> = ({ activeIndustry
 
     const userText = inputVal;
     const timestamp = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-    setMessages(prev => [...prev, { sender: 'user', text: userText, timestamp }]);
+    setMessages(prev => [...prev, { id: `msg-${Date.now()}-u`, sender: 'user', text: userText, timestamp }]);
     setInputVal('');
     setIsTyping(true);
 
     setTimeout(() => {
       // Process using NLP engine (mock responses)
       const res = processNLPQuery(userText, activeIndustry);
+      
+      // Generate step-by-step reasoning steps for the thinking process box
+      let reasoningSteps: string[] = [];
+      const query = userText.toLowerCase();
+      if (query.includes('predict') || query.includes('forecast') || query.includes('future') || query.includes('next month')) {
+        reasoningSteps = [
+          `Retrieved 12-month sales telemetry for ${template.name}`,
+          "Computed rolling average growth rate (+14.8% baseline)",
+          "Applied auto-regressive ARIMA projection models",
+          "Generated confidence boundaries and seasonal indexes for next 6 months"
+        ];
+      } else if (query.includes('poorly') || query.includes('worst') || query.includes('slowest') || query.includes('improve')) {
+        const lowPerformer = template.leaderboard[template.leaderboard.length - 1];
+        reasoningSteps = [
+          "Scanned active inventory and category tables",
+          "Calculated growth rate and volume margins",
+          `Identified lowest performance outlier: ${lowPerformer.name} (${lowPerformer.growth}%)`
+        ];
+      } else {
+        reasoningSteps = [
+          `Parsed natural language query: "${userText}"`,
+          `Retrieved current active KPIs from ${template.name} workspace`,
+          "Formatted telemetry dashboard summaries"
+        ];
+      }
+
       setIsTyping(false);
+      
+      const aiMsgId = `msg-${Date.now()}-ai`;
+      const finalText = res.answerText;
+      const visualData = res.visualType === 'chart' && res.chartData ? {
+        type: 'chart' as const,
+        chartData: res.chartData,
+        chartKeys: res.chartKeys || ['value'],
+        chartColors: res.chartColors || ['#6366f1']
+      } : undefined;
+
+      // Add placeholder message with empty text and showReasoning = true
       setMessages(prev => [...prev, {
+        id: aiMsgId,
         sender: 'ai',
-        text: res.answerText,
+        text: '', // start empty for streaming
         timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-        visual: res.visualType === 'chart' && res.chartData ? {
-          type: 'chart',
-          chartData: res.chartData,
-          chartKeys: res.chartKeys || ['value'],
-          chartColors: res.chartColors || ['#6366f1']
-        } : undefined
+        visual: visualData,
+        reasoning: reasoningSteps,
+        showReasoning: true
       }]);
-    }, 1000);
+
+      // Stream the message word by word
+      let currentText = '';
+      const words = finalText.split(' ');
+      let wordIdx = 0;
+      const interval = setInterval(() => {
+        if (wordIdx < words.length) {
+          currentText += (wordIdx === 0 ? '' : ' ') + words[wordIdx];
+          setMessages(prev => prev.map(m => m.id === aiMsgId ? { ...m, text: currentText } : m));
+          wordIdx++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 35); // 35ms per word for highly smooth visual output
+
+    }, 1500); // 1.5s simulated thinking delay
   };
 
   const handleResetSimulator = () => {
@@ -142,12 +196,45 @@ export const AIAssistantPage: React.FC<AIAssistantPageProps> = ({ activeIndustry
               <div className={`max-w-[75%] rounded-2xl p-4.5 text-[11px] leading-relaxed border ${
                 m.sender === 'user'
                   ? 'bg-brand-500 text-white border-brand-600'
-                  : 'bg-white dark:bg-slate-950/80 text-slate-655 dark:text-slate-200 border-slate-200/50 dark:border-slate-850'
+                  : 'bg-white dark:bg-slate-950/80 text-slate-655 dark:text-slate-205 border-slate-200/50 dark:border-slate-850'
               }`}>
+                {/* Reasoning Box */}
+                {m.sender === 'ai' && m.reasoning && m.reasoning.length > 0 && (
+                  <div className="mb-3.5 border-l-2 border-indigo-500/50 pl-3 py-1.5 space-y-1 bg-slate-50/50 dark:bg-slate-900/30 rounded-r-xl p-2.5">
+                    <div 
+                      onClick={() => {
+                        setMessages(prev => prev.map((msg, i) => i === idx ? { ...msg, showReasoning: !msg.showReasoning } : msg))
+                      }}
+                      className="flex items-center gap-1.5 cursor-pointer select-none text-[8.5px] font-bold text-slate-400 dark:text-slate-500 hover:text-slate-605 dark:hover:text-slate-400 transition-colors uppercase tracking-wider"
+                    >
+                      <Brain size={10} className="text-indigo-550 dark:text-indigo-400 animate-pulse-slow" />
+                      <span>{m.showReasoning ? 'Hide Thinking Process' : 'Show Thinking Process'}</span>
+                    </div>
+                    {m.showReasoning && (
+                      <ul className="space-y-1 mt-1.5 list-none p-0">
+                        {m.reasoning.map((step, sIdx) => (
+                          <li key={sIdx} className="text-[9.5px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5 leading-snug">
+                            <span className="w-1 h-1 rounded-full bg-indigo-500/60 inline-block" />
+                            {step}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
+
                 {/* Body paragraph support markdown bold rendering */}
-                <p className="whitespace-pre-line">
-                  {m.text}
-                </p>
+                {m.sender === 'user' ? (
+                  <p className="whitespace-pre-line select-text">
+                    {m.text}
+                  </p>
+                ) : (
+                  <p className="whitespace-pre-line select-text" dangerouslySetInnerHTML={{ 
+                    __html: m.text
+                      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                  }} />
+                )}
 
                 {/* Optional Chart Visuals */}
                 {m.visual && m.visual.type === 'chart' && (

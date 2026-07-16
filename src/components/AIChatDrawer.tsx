@@ -45,6 +45,8 @@ interface Message {
     impact: string;
     applied?: boolean;
   };
+  reasoning?: string[];
+  showReasoning?: boolean;
 }
 
 interface AIChatDrawerProps {
@@ -89,11 +91,11 @@ Ask me anything about your business data, predictions, or anomaly reports. For e
     }
   }, [isOpen, initialQuery]);
 
-  const handleNewQuery = (query: string) => {
+  const handleNewQuery = (queryText: string) => {
     const userMsg: Message = {
       id: `msg-${Date.now()}-u`,
       sender: 'user',
-      text: query,
+      text: queryText,
       timestamp: new Date()
     };
 
@@ -102,12 +104,44 @@ Ask me anything about your business data, predictions, or anomaly reports. For e
 
     // Simulate AI thinking and reply
     setTimeout(() => {
-      const response: NLPResponse = processNLPQuery(query);
+      const response: NLPResponse = processNLPQuery(queryText);
       
-      const aiMsg: Message = {
-        id: `msg-${Date.now()}-ai`,
+      // Determine reasoning steps
+      let reasoningSteps: string[] = [];
+      const query = queryText.toLowerCase();
+      if (query.includes('predict') || query.includes('forecast') || query.includes('future')) {
+        reasoningSteps = [
+          "Retrieved monthly sales history",
+          "Calculated baseline growth average (+14.8% YoY)",
+          "Applied auto-regressive ARIMA projection model",
+          "Generated confidence boundaries for Q4 projections"
+        ];
+      } else if (query.includes('poorly') || query.includes('worst') || query.includes('slowest')) {
+        reasoningSteps = [
+          "Scanned inventory levels and turnover ratios",
+          "Sorted catalog items by demand-to-stock ratio",
+          "Flagged Zenith Pro Smartwatch as overstock outlier"
+        ];
+      } else if (query.includes('profit') || query.includes('decline') || query.includes('why')) {
+        reasoningSteps = [
+          "Analyzed net margin telemetry across all categories",
+          "Identified Electronics as highest revenue but lowest margin (18%) outlier",
+          "Calculated potential profit gain from marketing budget reallocation (+₹12,000)"
+        ];
+      } else {
+        reasoningSteps = [
+          `Parsed query: "${queryText}"`,
+          "Retrieved dynamic telemetry highlights from active workspace"
+        ];
+      }
+
+      setIsTyping(false);
+
+      const aiMsgId = `msg-${Date.now()}-ai`;
+      setMessages(prev => [...prev, {
+        id: aiMsgId,
         sender: 'ai',
-        text: response.answerText,
+        text: '', // start empty for streaming
         timestamp: new Date(),
         visual: response.visualType !== 'none' ? {
           type: response.visualType,
@@ -119,12 +153,27 @@ Ask me anything about your business data, predictions, or anomaly reports. For e
         recommendation: response.recommendation ? {
           ...response.recommendation,
           applied: false
-        } : undefined
-      };
+        } : undefined,
+        reasoning: reasoningSteps,
+        showReasoning: true
+      }]);
 
-      setMessages(prev => [...prev, aiMsg]);
-      setIsTyping(false);
-    }, 1200);
+      // Stream text word-by-word
+      let currentText = '';
+      const words = response.answerText.split(' ');
+      let wordIdx = 0;
+      
+      const interval = setInterval(() => {
+        if (wordIdx < words.length) {
+          currentText += (wordIdx === 0 ? '' : ' ') + words[wordIdx];
+          setMessages(prev => prev.map(m => m.id === aiMsgId ? { ...m, text: currentText } : m));
+          wordIdx++;
+        } else {
+          clearInterval(interval);
+        }
+      }, 35);
+
+    }, 1500);
   };
 
   const handleSend = (e: React.FormEvent) => {
@@ -252,7 +301,7 @@ Ask me anything about your business data, predictions, or anomaly reports. For e
 
         {/* Messages Feed */}
         <div className="flex-1 overflow-y-auto p-4 space-y-4">
-          {messages.map((msg) => (
+          {messages.map((msg, idx) => (
             <div 
               key={msg.id}
               className={`flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
@@ -264,13 +313,44 @@ Ask me anything about your business data, predictions, or anomaly reports. For e
                     : 'bg-slate-100 dark:bg-slate-800/80 text-slate-800 dark:text-slate-250 rounded-bl-none border border-slate-200/20'
                 }`}
               >
+                {/* Reasoning Box */}
+                {msg.sender === 'ai' && msg.reasoning && msg.reasoning.length > 0 && (
+                  <div className="mb-2.5 border-l-2 border-indigo-550 pl-2.5 py-0.5 space-y-0.5 bg-slate-50/50 dark:bg-slate-900/30 rounded-r-lg p-1.5 animate-fade-in">
+                    <div 
+                      onClick={() => {
+                        setMessages(prev => prev.map((m, i) => i === idx ? { ...m, showReasoning: !m.showReasoning } : m))
+                      }}
+                      className="flex items-center gap-1 cursor-pointer select-none text-[8.5px] font-bold text-slate-400 dark:text-slate-500 hover:text-slate-600 dark:hover:text-slate-450 transition-colors uppercase tracking-wider"
+                    >
+                      <Brain size={10} className="text-indigo-500 animate-pulse-slow" />
+                      <span>{msg.showReasoning ? 'Hide Thinking Process' : 'Show Thinking Process'}</span>
+                    </div>
+                    {msg.showReasoning && (
+                      <ul className="space-y-0.5 mt-1 list-none p-0">
+                        {msg.reasoning.map((step, sIdx) => (
+                          <li key={sIdx} className="text-[9.5px] text-slate-500 dark:text-slate-400 flex items-center gap-1.5 leading-snug">
+                            <span className="w-1 h-1 rounded-full bg-indigo-500/60 inline-block" />
+                            {step}
+                          </li>
+                        ))}
+                      </ul>
+                    )}
+                  </div>
+                )}
+
                 {/* Text body */}
-                <p className="whitespace-pre-line select-text" dangerouslySetInnerHTML={{ 
-                  // convert markdown bold tags to html bold tags
-                  __html: msg.text
-                    .replace(/\*\*(.*?)\*\*/g, '<strong>₹1</strong>')
-                    .replace(/\*(.*?)\*/g, '<em>₹1</em>')
-                }} />
+                {msg.sender === 'user' ? (
+                  <p className="whitespace-pre-line select-text">
+                    {msg.text}
+                  </p>
+                ) : (
+                  <p className="whitespace-pre-line select-text" dangerouslySetInnerHTML={{ 
+                    // convert markdown bold tags to html bold tags
+                    __html: msg.text
+                      .replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>')
+                      .replace(/\*(.*?)\*/g, '<em>$1</em>')
+                  }} />
+                )}
 
                 {/* Render visual if present */}
                 {msg.visual && renderVisual(msg.visual)}
