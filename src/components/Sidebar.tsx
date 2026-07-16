@@ -36,6 +36,7 @@ export const Sidebar: React.FC<SidebarProps> = ({
   onLogout 
 }) => {
   const [isCollapsed, setIsCollapsed] = useState(false);
+  const [showConfirm, setShowConfirm] = useState(false);
 
   const menuItems = [
     { id: 'home', label: 'Home Dashboard', icon: LayoutDashboard },
@@ -146,8 +147,8 @@ export const Sidebar: React.FC<SidebarProps> = ({
 
       {/* User profile footer & Logout */}
       <div className="p-4 border-t border-slate-200/50 dark:border-slate-800/50 flex-shrink-0">
-        <div className={`flex items-center justify-between gap-2 ${isCollapsed ? 'flex-col' : ''}`}>
-          <div className="flex items-center gap-2.5 min-w-0">
+        <div className={`flex flex-col gap-2`}>
+          <div className={`flex items-center gap-2.5 min-w-0 ${isCollapsed ? 'justify-center' : ''}`}>
             <img 
               src={currentUser?.avatar || "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=150"} 
               alt="Profile Avatar" 
@@ -158,24 +159,74 @@ export const Sidebar: React.FC<SidebarProps> = ({
                 <span className="font-extrabold text-[11px] text-slate-800 dark:text-slate-200 truncate leading-none">
                   {currentUser?.name || 'Jane Doe'}
                 </span>
-                <span className="text-[8.5px] text-slate-455 dark:text-slate-500 font-bold block mt-1 uppercase">
+                <span className="text-[8.5px] text-slate-400 dark:text-slate-550 font-bold block mt-1 uppercase">
                   {currentUser?.role || 'Admin'} Mode
                 </span>
               </div>
             )}
           </div>
           
-          <button 
-            onClick={onLogout}
-            className={`p-1.5 rounded-lg text-slate-400 hover:text-red-500 hover:bg-red-500/10 transition-all ${
-              isCollapsed ? 'mt-2' : ''
-            }`}
-            title="Log out session"
-          >
-            <LogOut size={14} />
-          </button>
+          {/* Logout Bar Button */}
+          {!isCollapsed ? (
+            <button 
+              onClick={() => setShowConfirm(true)}
+              className="w-full mt-2 flex items-center justify-center gap-2 py-2 px-3 bg-red-500/5 hover:bg-red-500/10 border border-red-500/20 hover:border-red-500/35 text-red-500 text-[10.5px] font-bold rounded-xl transition-all"
+            >
+              <LogOut size={12} />
+              <span>Log Out Session</span>
+            </button>
+          ) : (
+            <button 
+              onClick={() => setShowConfirm(true)}
+              className="w-full mt-2 flex items-center justify-center p-2 bg-red-500/5 hover:bg-red-500/10 text-red-500 rounded-xl transition-all border border-red-500/15"
+              title="Log out session"
+            >
+              <LogOut size={13} />
+            </button>
+          )}
         </div>
       </div>
+
+      {/* Confirmation Modal */}
+      {showConfirm && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-sm">
+          <style>{`
+            @keyframes scaleIn {
+              from { opacity: 0; transform: scale(0.95); }
+              to { opacity: 1; transform: scale(1); }
+            }
+            .modal-scale-in {
+              animation: scaleIn 0.2s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+            }
+          `}</style>
+          <div className="modal-scale-in w-full max-w-sm bg-white dark:bg-[#0b1329] border border-slate-200 dark:border-slate-800 rounded-3xl shadow-2xl p-6 text-slate-800 dark:text-slate-100 relative overflow-hidden">
+            <h3 className="text-sm font-bold text-slate-900 dark:text-white flex items-center gap-2 mb-2">
+              <LogOut size={16} className="text-red-500" />
+              <span>Confirm Platform Logout</span>
+            </h3>
+            <p className="text-[11px] text-slate-500 dark:text-slate-400 leading-relaxed mb-5">
+              Are you sure you want to end your active workspace session? Unsaved progress and telemetry filters will be reset.
+            </p>
+            <div className="flex items-center justify-end gap-2.5">
+              <button 
+                onClick={() => setShowConfirm(false)}
+                className="px-4 py-2 border border-slate-250 dark:border-slate-800 hover:bg-slate-50 dark:hover:bg-slate-900 text-slate-500 dark:text-slate-400 text-xs font-bold rounded-xl transition-colors"
+              >
+                Cancel
+              </button>
+              <button 
+                onClick={() => {
+                  setShowConfirm(false);
+                  onLogout();
+                }}
+                className="px-4 py-2 bg-red-500 hover:bg-red-650 text-white text-xs font-bold rounded-xl shadow-md shadow-red-500/10 transition-colors"
+              >
+                Confirm Logout
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </aside>
   );
 };
