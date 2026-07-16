@@ -6,32 +6,47 @@ interface LoginPageProps {
 }
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
+  const [isRegister, setIsRegister] = useState(false);
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [role, setRole] = useState<'Manager' | 'Analyst'>('Manager');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!email || !password) {
-      setError('Please fill in all credentials fields.');
-      return;
+    if (isRegister) {
+      if (!name || !email || !password || !confirmPassword) {
+        setError('Please fill in all registration fields.');
+        return;
+      }
+      if (password !== confirmPassword) {
+        setError('Passwords do not match.');
+        return;
+      }
+    } else {
+      if (!email || !password) {
+        setError('Please fill in all credentials fields.');
+        return;
+      }
     }
     setError('');
     setIsLoading(true);
 
     setTimeout(() => {
       setIsLoading(false);
-      // Derive display name from email prefix
-      const name = email.split('@')[0]
+      // Derive display name from email prefix if logging in without name
+      const displayName = name || email.split('@')[0]
         .replace(/[._]/g, ' ')
         .replace(/\b\w/g, c => c.toUpperCase());
-      onLogin(email, name || 'Jane Doe', role);
+      onLogin(email, displayName || 'Jane Doe', role);
     }, 1200);
   };
 
   const handleQuickDemo = (demoRole: 'Manager' | 'Analyst') => {
+    setIsRegister(false);
     setRole(demoRole);
     if (demoRole === 'Manager') {
       setEmail('manager.alex@luminaryai.com');
@@ -117,10 +132,29 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
           
           <h2 className="text-sm font-light text-slate-100 mb-6 flex items-center gap-2">
             <Shield size={16} className="text-indigo-400" />
-            <span className="tracking-wide">Secure System Access</span>
+            <span className="tracking-wide">{isRegister ? 'Register Security Credentials' : 'Secure System Access'}</span>
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
+            {/* Full Name Field (Register Mode Only) */}
+            {isRegister && (
+              <div className="space-y-1.5 animate-[slideUpFade_0.3s_ease-out_forwards]">
+                <label className="text-[10px] font-light uppercase text-[#94a3b8] block tracking-widest">
+                  Full Name
+                </label>
+                <div className="relative">
+                  <User size={15} className="absolute left-3.5 top-3.5 text-slate-500" />
+                  <input 
+                    type="text" 
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    placeholder="Jane Doe"
+                    className="w-full bg-[#0c0f1d] hover:bg-[#080b15] border border-slate-900/60 focus:border-brand-500/80 rounded-xl py-3 pl-10 pr-4 text-xs text-slate-100 placeholder-slate-700 outline-none focus-glow transition-all font-light"
+                  />
+                </div>
+              </div>
+            )}
+
             {/* Email Field */}
             <div className="space-y-1.5">
               <label className="text-[10px] font-light uppercase text-[#94a3b8] block tracking-widest">
@@ -155,6 +189,25 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
               </div>
             </div>
 
+            {/* Confirm Password Field (Register Mode Only) */}
+            {isRegister && (
+              <div className="space-y-1.5 animate-[slideUpFade_0.3s_ease-out_forwards]">
+                <label className="text-[10px] font-light uppercase text-[#94a3b8] block tracking-widest">
+                  Confirm Password
+                </label>
+                <div className="relative">
+                  <Lock size={15} className="absolute left-3.5 top-3.5 text-slate-500" />
+                  <input 
+                    type="password" 
+                    value={confirmPassword}
+                    onChange={(e) => setConfirmPassword(e.target.value)}
+                    placeholder="••••••••••••"
+                    className="w-full bg-[#0c0f1d] hover:bg-[#080b15] border border-slate-900/60 focus:border-brand-500/80 rounded-xl py-3 pl-10 pr-4 text-xs text-slate-100 placeholder-slate-700 outline-none focus-glow transition-all font-light"
+                  />
+                </div>
+              </div>
+            )}
+
             {/* Role Select Mode */}
             <div className="space-y-1.5">
               <label className="text-[10px] font-light uppercase text-[#94a3b8] block tracking-widest">
@@ -183,7 +236,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
 
             {/* Error Message */}
             {error && (
-              <p className="text-[10px] text-red-400 font-light bg-red-950/10 border border-red-900/20 p-2.5 rounded-xl text-center">
+              <p className="text-[10px] text-red-450 font-light bg-red-950/10 border border-red-900/20 p-2.5 rounded-xl text-center">
                 {error}
               </p>
             )}
@@ -198,12 +251,30 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin" />
               ) : (
                 <>
-                  <span>Enter Platform Workspace</span>
+                  <span>{isRegister ? 'Create Platform Account' : 'Enter Platform Workspace'}</span>
                   <ArrowRight size={14} className="text-[#cbd5e1]" />
                 </>
               )}
             </button>
           </form>
+
+          {/* Mode Switcher */}
+          <div className="text-center mt-4">
+            <button 
+              type="button"
+              onClick={() => {
+                setIsRegister(!isRegister);
+                setError('');
+                setName('');
+                setEmail('');
+                setPassword('');
+                setConfirmPassword('');
+              }}
+              className="text-[10px] font-light text-indigo-400 hover:text-indigo-300 transition-colors"
+            >
+              {isRegister ? 'Already have an account? Sign In' : "Don't have an account? Register"}
+            </button>
+          </div>
 
           {/* OR Separator */}
           <div className="relative my-6 text-center">
