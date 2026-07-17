@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Lock, Mail, BrainCircuit, Sparkles, Shield, User, ArrowRight } from 'lucide-react';
+import { supabase, isSupabaseConfigured } from '../utils/supabaseClient';
 
 interface LoginPageProps {
   onLogin: (email: string, name: string, role: 'Manager' | 'Analyst') => void;
@@ -15,7 +16,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     if (isRegister) {
       if (!name || !email || !password || !confirmPassword) {
@@ -35,14 +36,56 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     setError('');
     setIsLoading(true);
 
-    setTimeout(() => {
-      setIsLoading(false);
-      // Derive display name from email prefix if logging in without name
-      const displayName = name || email.split('@')[0]
-        .replace(/[._]/g, ' ')
-        .replace(/\b\w/g, c => c.toUpperCase());
-      onLogin(email, displayName || 'Jane Doe', role);
-    }, 1200);
+    if (isSupabaseConfigured()) {
+      try {
+        if (isRegister) {
+          const { data, error: registerErr } = await supabase.auth.signUp({
+            email,
+            password,
+            options: {
+              data: {
+                full_name: name,
+                role: role
+              }
+            }
+          });
+          if (registerErr) {
+            setError(registerErr.message);
+            setIsLoading(false);
+            return;
+          }
+          setIsLoading(false);
+          onLogin(email, name, role);
+        } else {
+          const { data, error: loginErr } = await supabase.auth.signInWithPassword({
+            email,
+            password
+          });
+          if (loginErr) {
+            setError(loginErr.message);
+            setIsLoading(false);
+            return;
+          }
+          const user = data.user;
+          const displayName = user?.user_metadata?.full_name || user?.email?.split('@')[0];
+          const userRole = (user?.user_metadata?.role as 'Manager' | 'Analyst') || role;
+          setIsLoading(false);
+          onLogin(email, displayName, userRole);
+        }
+      } catch (err: any) {
+        setError(err.message || 'An authentication error occurred.');
+        setIsLoading(false);
+      }
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+        // Derive display name from email prefix if logging in without name
+        const displayName = name || email.split('@')[0]
+          .replace(/[._]/g, ' ')
+          .replace(/\b\w/g, c => c.toUpperCase());
+        onLogin(email, displayName || 'Jane Doe', role);
+      }, 1200);
+    }
   };
 
   const handleQuickDemo = (demoRole: 'Manager' | 'Analyst') => {
